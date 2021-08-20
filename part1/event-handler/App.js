@@ -1,3 +1,4 @@
+import { useState } from 'react'
 const App = () => {
   const [ counter, setCounter ] = useState(0)
 
@@ -5,7 +6,7 @@ const App = () => {
     console.log('clicked')
   }
 
-  resume (
+  return (
     <div>
       <div> {counter} </div>
       <button onClick={handleClick}>
@@ -14,3 +15,4 @@ const App = () => {
     </div>
   )
 }
+export default App;
