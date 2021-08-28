@@ -1,16 +1,36 @@
+// ejercicio 1.7
 import React, { useState } from 'react'
 
 const App = () => {
   // save clicks of each button to its own state
   
-  const [good, setGood] = useState(0)
-  const [neutral, setNeutral] = useState(0)
-  const [bad, setBad] = useState(0)
+  const [click, setClick] = useState({
+    good:0,
+    neutral:0,
+    bad:0,
+    all:0
+  })
+  const [stats, setStats] = useState({
+    avg:0,
+    pos:0
+  })
+    
+  const handleGood = () => {
+    setClick({...click, good: click.good + 1, all: click.all + 1})
+    setStats({...stats, avg: (click.good-click.bad)/click.all})
+  }
+  const handleNeutral = () => { 
+    setClick({...click, neutral: click.neutral + 1, all: click.all + 1})
+    setStats({...stats, avg: (click.good-click.bad)/click.all})
 
-  const handleGood = () => setGood(good + 1)
-  const handleNeutral = () => setNeutral(neutral + 1)
-  const handleBad = () => setBad(bad + 1)
+  }
+  const handleBad = () => { 
+    setClick({...click, bad: click.bad + 1, all: click.all + 1})
+    setStats({...stats, avg: (click.good-click.bad)/click.all})
 
+  }
+
+  
   const Boton = ({handler, text}) =>(
     <button onClick={handler}>
       {text}
@@ -26,10 +46,12 @@ const App = () => {
       <Boton handler={handleBad} text='Bad' />
       
       <h1> Statistics </h1> 
-      <Display text='Good' count={good} />
-      <Display text='Neutral' count={neutral} />
-      <Display text='Bad' count={bad} />
-
+      <Display text='Good' count={click.good} />
+      <Display text='Neutral' count={click.neutral} />
+      <Display text='Bad' count={click.bad} />
+      <Display text='All' count={click.all}  />
+      <Display text='Avg' count={stats.avg} />
+      
     </div>
   )
 }
