@@ -1,20 +1,20 @@
 // ejercicio 1.8
 import React, { useState } from 'react'
+const StatisticLine = ({text, value}) =>  <p> {text} : {value} </p>
 const Statistics  = (props) =>{
   
     console.log(props)
     if(props.click.all === 0) return 'there is no stats'
      
     return(
-    <div>
-       <h1> Statistics </h1>,
-        <p> Good: {props.click.good} </p>
-        <p> Neutral: {props.click.neutral} </p>
-        <p> Bad: {props.click.bad} </p>
-        <p> All: {props.click.all} </p>
-        <p> Avg: {props.click.avg} </p>
-        <p> Pos: {props.click.pos} </p>
-     
+      <div>
+        <h1> Statistics </h1>,
+        <StatisticLine text='Good' value={props.click.good} />     
+        <StatisticLine text='Neutral' value={props.click.neutral} />
+        <StatisticLine text='Bad' value={props.click.bad} />
+        <StatisticLine text='All' value={props.click.all} />
+        <StatisticLine text='Avg' value={props.click.avg} />
+        <StatisticLine text='Pos' value={props.click.pos} />
       </div>
     ) 
   }
