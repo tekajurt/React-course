@@ -1,44 +1,56 @@
+// ejercicio 1.7
 import React, { useState } from 'react'
 
 const App = () => {
   // save clicks of each button to its own state
   
-  const [good, setGood] = useState(0)
-  const [neutral, setNeutral] = useState(0)
-  const [bad, setBad] = useState(0)
-  const [all, setAll] = useState(good+neutral+bad)
-
-  const avg = () => setAll(all)
-
-  const handleGood = () => {
-    setGood(good + 1)
-    avg
-  }
-  const handleNeutral = () => setNeutral(neutral + 1)
-  const handleBad = () => setBad(bad + 1)
-
+  const [click, setClick] = useState({
+    good:0,
+    neutral:0,
+    bad:0,
+    all:0,
+    avg:0,
+    pos:0
+  })
+  const onClickGood  = () => setClick({
+    ...click,
+    good: click.good + 1,
+    all: click.all + 1,
+    avg: (click.good - click.bad + 1)/(click.all + 1),
+    pos: ((click.good/(click.all + 1))*100)+'%'
+  })
+  const onClickNeutral = () => setClick({
+    ...click,
+    neutral: click.neutral + 1,
+    all: click.all + 1,
+    avg: (click.good - click.bad)/(click.all + 1),
+    pos: ((click.good/(click.all + 1))*100)+'%'
+  })
+  const onClickBad = () =>  setClick({
+    ...click,
+    bad: click.bad + 1,
+    all: click.all + 1,
+    avg: (click.good - click.bad - 1)/(click.all + 1),
+    pos: ((click.good/(click.all + 1))*100)+'%'
+  })
   
-  const Boton = ({handler, text}) =>(
-    <button onClick={handler}>
-      {text}
-    </button>
-  )
-  const Display = ({text, count}) =>  <p> {text} : {count} </p>
-
+  const Display  = ({text, count}) =>{
+    return <p> {text} : {count} </p>
+  }
   return (
     <div>
       <h1> give feedback </h1>
-      <Boton handler={handleGood} text='Good' />
-      <Boton handler={handleNeutral} text='Neutral' />
-      <Boton handler={handleBad} text='Bad' />
+      <button onClick={() => onClickGood()}> Good </button>
+      <button onClick={() => onClickNeutral()}> Neutral </button>
+      <button onClick={() => onClickBad()}> Bad </button>
       
       <h1> Statistics </h1> 
-      <Display text='Good' count={good} />
-      <Display text='Neutral' count={neutral} />
-      <Display text='Bad' count={bad} />
-
-      <Display text='Avg' count={all} />
-
+      <Display text='Good' count={click.good} />
+      <Display text='Neutral' count={click.neutral} />
+      <Display text='Bad' count={click.bad} />
+      <Display text='All' count={click.all}  />
+      <Display text='Avg' count={click.avg} />
+      <Display text='Pos' count={click.pos} /> 
     </div>
   )
 }
